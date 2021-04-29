@@ -1,0 +1,80 @@
+#include <iostream> 
+#include <cmath>
+
+using namespace std;
+
+int main() 
+{
+  int n = 11;
+  double D = 0.00001;
+  double h = 0.1;
+  double tau = 0.7;
+  double c = (D * tau) / pow(h, 2); 
+  double T_pocz[n], T[n], T_konc[n];
+  
+  T_konc[0] = 310.0; 
+  T_konc[n-1] = 454.0;
+  
+  for(int i=1; i<n-1; i++) 
+  {
+    T_konc[i] = 293.0; 
+  }
+  
+  T[0] = 310.0; 
+  T[n-1] = 454.0;
+  
+  T_pocz[0] = 310.0; 
+  T_pocz[n-1] = 454.0;
+  
+  int limit = //wpisujemy w to miejsce ilość iteracji ; 
+  
+  for(int j=1; j<n-1; j++) 
+  {
+  
+    if(j>=2 && j<=8) 
+    {
+      T[j] = T_konc[j] + c * (T_konc[j+1] - 2.0 * T_konc[j] + T_konc[j-1]) + c_2 * (T_konc[j+2] - 4.0 * T_konc[j+1] + 6.0 * T_konc[j] - 4.0 * T_konc[j-1] + T_konc[j-2]); 
+    }
+    
+    else 
+    {
+      T[j] = T_konc[j] + c * (T_konc[j+1] - 2.0 * T_konc[j] + T_konc[j-1]); 
+    }
+  }
+
+  for(int j=0; j<limit; j++) 
+  {
+    for(int i=1; i<n-1; i++) 
+    {
+      if(i>=2 && i<=8) 
+      {
+        T_pocz[i] = T[i] + c * (T[i+1] - 2.0 * T[i] + T[i-1]) + c_2 * (T[i+2] - 4.0 * T[i+1] + 6.0 * T[i] - 4.0 * T[i-1] + T[i-2]); 
+      }
+
+      else 
+      {
+        T_pocz[i] = T[i] + c * (T[i+1] - 2.0 * T[i] + T[i-1]); 
+      }
+    
+    }
+    
+    if(j>=9995) 
+    {
+      cout << j + 3 << "time:" << endl;
+
+      for(int i=0; i<n; i++) 
+      {
+        cout << "T[" << i + 1 << "]: " << T_pocz[i] << endl; 
+      }
+    
+      cout << endl; 
+    }
+
+    for(int k=1; k<n-1; k++) 
+    {
+      T[k] = T_pocz[k]; 
+    }
+  }
+  return 0; 
+}
+
